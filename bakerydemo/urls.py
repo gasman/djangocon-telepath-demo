@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
+from django.urls import path
 
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.documents import urls as wagtaildocs_urls
@@ -9,12 +10,18 @@ from wagtail.core import urls as wagtail_urls
 
 from bakerydemo.search import views as search_views
 from .api import api_router
+from orderform.views import order_form
+from formdata import views as formdata_views
+from sprites import views as sprite_views
 
 urlpatterns = [
     url(r'^django-admin/', admin.site.urls),
 
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
+    path('order/', order_form, name='order_form'),
+    path('formdata/', formdata_views.index, name='formdata'),
+    path('sprites/', sprite_views.index, name='sprites'),
 
     url(r'^search/$', search_views.search, name='search'),
 

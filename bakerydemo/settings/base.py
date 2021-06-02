@@ -58,6 +58,11 @@ INSTALLED_APPS = [
     'taggit',
     'wagtailfontawesome',
 
+    'orderform',
+    'formdata',
+    'sprites',
+    'telepath',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

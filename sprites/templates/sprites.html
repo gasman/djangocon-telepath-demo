@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+    <head>
+        {{ media.js }}
+        <script type="application/x-telepath-json" id="sprites-json">
+            {{ sprites_json|safe }}
+        </script>
+        <script>
+function start() {
+    const spritesJson = document.getElementById('sprites-json').innerText;
+    sprites = telepath.unpack(JSON.parse(spritesJson));
+    for (sprite of sprites) {
+        sprite.animate();
+    }
+}
+        </script>
+    </head>
+    <body onload="start()">
+    </body>
+</html>

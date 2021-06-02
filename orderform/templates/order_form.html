@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Order form</title>
+        <link rel="stylesheet" href="{% static 'css/order_form.css' %}">
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'js/order_form.js' %}"></script>
+    </head>
+    <body>
+        <h1>Order form</h1>
+
+        <form action="{% url 'order_form' %}" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Delivery address</legend>
+                {% for field in address_form.visible_fields %}
+                    <p class="container-{{ field.name }}">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                    </p>
+                {% endfor %}
+                {% for field in address_form.hidden_fields %}
+                    {{ field }}
+                {% endfor %}
+            </fieldset>
+            <fieldset>
+                <legend>Voucher codes</legend>
+                {{ voucher_code_formset.management_form }}
+
+                <script type="text/x-html-template" id="voucher-code-form-template">
+                    {{ voucher_code_formset.empty_form.as_p }}
+                </script>
+
+                <ul id="voucher-codes">
+                    {% for form in voucher_code_formset %}
+                        <li>{{ form.as_p }}</li>
+                    {% endfor %}
+                </ul>
+                <input type="button" id="add-voucher-code" value="Add another">
+            </fieldset>
+            <input type="submit" value="Place order">
+        </form>
+    </body>
+</html>

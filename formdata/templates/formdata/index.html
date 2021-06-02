@@ -1,0 +1,51 @@
+{% extends 'wagtailadmin/admin_base.html' %}
+{% load static %}
+
+{% block titletag %}Form data demo{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/formdata.css' %}">
+    {{ media.css }}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'wagtailadmin/js/modal-workflow.js' %}"></script>
+
+    <!-- Media definitions -->
+{{ media.js }}
+    <!-- End media definitions -->
+
+    <script type="application/x-telepath-json" id="form-spec">
+{{ form_json|safe }}
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const formJson = document.getElementById('form-spec').innerText;
+            const form = telepath.unpack(JSON.parse(formJson));
+            window.form = form;
+
+            const formDataField = document.getElementById('form-data');
+            document.getElementById('get-state').addEventListener('click', () => {
+                formDataField.value = JSON.stringify(form.getState(), null, 4);
+            })
+            document.getElementById('set-state').addEventListener('click', () => {
+                form.setState(JSON.parse(formDataField.value));
+            })
+        });
+    </script>
+{% endblock %}
+
+{% block furniture %}
+    <form id="demo-form">
+        {% csrf_token %}
+        <ul>
+            {% include 'wagtailadmin/shared/form_as_ul.html' %}
+        </ul>
+    </form>
+    <ul class="controls">
+        <li><button id="get-state" class="button">&rarr; get state</button></li>
+        <li><button id="set-state" class="button">&larr; set state</button></li>
+    </ul>
+    <textarea id="form-data"></textarea>
+{% endblock %}

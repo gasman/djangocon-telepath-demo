@@ -1,0 +1,26 @@
+body {
+    background-color: #99eeaa;
+}
+fieldset {
+    background-color: #eeffee;
+}
+
+form p {
+    clear: both;
+    margin: 0;
+    padding-bottom: 10px;
+}
+
+form label {
+    float: left;
+    width: 150px;
+}
+
+form input[type='text'], form select {
+    width: 300px;
+}
+
+form input[type='submit'] {
+    margin-top: 20px;
+    margin-left: 170px;
+}
